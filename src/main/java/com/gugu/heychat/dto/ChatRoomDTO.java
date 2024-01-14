@@ -4,12 +4,17 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
-public class ChatRoomDTO {
+public class ChatRoomDTO implements Serializable {
+
+    // 직렬화 => 왜 하는 걸까? Redis에 저장되는 객체들은 Serialize 가능해야한다.
+    private static final long serialVersionUID = 6494678977089006639L;
+
     private String roomId;
     private String name;
 //    private Set<WebSocketSession> sessions = new HashSet<>();
