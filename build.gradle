@@ -31,6 +31,19 @@ dependencies {
 	//embedded-redis: 로컬 개발 환경을 위함, 외부 Redis 서버를 설치하고 구성ㅇ할 필요 없이 애플리케이션 내에서 Redis를 실행할 수 있다.
 	implementation 'it.ozimov:embedded-redis:0.7.2'
 
+	// Spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// com.sun.xml.bind
+	implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
+	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
+	// javax.xml.bind
+	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+
 	// view를 위함
 	implementation 'org.webjars.bower:bootstrap:4.3.1'
 	implementation 'org.webjars.bower:vue:2.5.16'
