@@ -2,6 +2,7 @@ package com.gugu.heychat.controller;
 
 import com.gugu.heychat.dto.ChatMessageDTO;
 import com.gugu.heychat.repository.ChatRoomRepository;
+import com.gugu.heychat.service.ChatService;
 import com.gugu.heychat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ChatController {
 
-    //private final SimpMessageSendingOperations messagingTemplate;
-    //private final RedisPublisher redisPublisher;
-    private final ChatRoomRepository chatRoomRepository;
-
-    private final RedisTemplate<String, Object> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
-    private final ChannelTopic channelTopic;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatService chatService;
 
     /*
-     MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
+     websocket "/pub/chat/message"로 들어오는 메세지를 처리한다.
      이때 클라이언트에서는 /app/chat/message 로 요청하게 되고 이것을 controller 가 받아서 처리한다. (pub)
      처리가 완료되면 /topic/chat/room/roomId 로 메시지가 전송된다. (sub)
      */
@@ -38,14 +35,9 @@ public class ChatController {
         message.setSender(nickname);
 
         log.info("발신 message : {}", message);
-
-        // 채팅방 입장시에는 대화명과 메시지를 자동으로 세팅한다.
-        if (ChatMessageDTO.MessageType.ENTER.equals(message.getType())) {
-            message.setSender("[알림]");
-//            chatRoomRepository.enterChatRoom(message.getRoomId());
-            message.setMessage(nickname + "님이 입장하셨습니다.");
-        }
-        // WebSocket에 발행된 메세지를 redis로 발행(publish)
-        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+        // 채팅방 인원수 세팅
+        message.setUserCount(chatRoomRepository.getUserCount(message.getRoomId()));
+        // WebSocket에 발행된 메시지를 redis로 발핸
+        chatService.sendChatMessage(message);
     }
 }

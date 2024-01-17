@@ -45,6 +45,8 @@ public class ChatRoomController {
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoomDTO> room() {
+        List<ChatRoomDTO> chatRooms = chatRoomRepository.findAllRoom();
+        chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
         return chatRoomRepository.findAllRoom();
     }
 
