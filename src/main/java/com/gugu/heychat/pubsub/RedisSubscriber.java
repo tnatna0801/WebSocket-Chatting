@@ -22,6 +22,7 @@ public class RedisSubscriber {
         try {
             // ChatMessage 객채로 맵핑
             ChatMessageDTO chatMessage = objectMapper.readValue(publishMessage, ChatMessageDTO.class);
+            log.info("[서버] 메세지를 DTO에 맵핑 : {}", chatMessage.getRoomId());
             // 채팅방을 구독한 클라이언트에게 메시지 발송
             messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
         } catch (Exception e) {

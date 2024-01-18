@@ -25,8 +25,10 @@ public class ChatService {
     public String getRoomId(String destination) {
         log.info("destination {} : ", destination);
         int lastIndex = destination.lastIndexOf('/');
-        if(lastIndex != -1)
-            return destination.substring(lastIndex);
+        if(lastIndex != -1) {
+            log.info("get roomId index : {}", lastIndex);
+            return destination.substring(lastIndex+1);
+        }
         else
             return "";
     }

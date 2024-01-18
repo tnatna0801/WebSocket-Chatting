@@ -25,8 +25,8 @@ public class ChatController {
 
     /*
      websocket "/pub/chat/message"로 들어오는 메세지를 처리한다.
-     이때 클라이언트에서는 /app/chat/message 로 요청하게 되고 이것을 controller 가 받아서 처리한다. (pub)
-     처리가 완료되면 /topic/chat/room/roomId 로 메시지가 전송된다. (sub)
+     이때 클라이언트에서는 /pub/chat/message 로 요청하게 되고 이것을 controller 가 받아서 처리한다. (pub)
+     처리가 완료되면 /sub/chat/room/roomId 로 메시지가 전송된다. (sub)
      */
     @MessageMapping("/chat/message") // websocket으로 들어오는 메세지 발행을 처리한다.
     public void message(ChatMessageDTO message, @Header("token") String token) {
