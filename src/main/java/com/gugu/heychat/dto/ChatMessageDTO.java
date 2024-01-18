@@ -1,24 +1,15 @@
 package com.gugu.heychat.dto;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class ChatMessageDTO {
-    public enum MessageType {
-        ENTER, TALK, QUIT
-    }
-    private MessageType type; // 메세지 타입
-    private String roomId; // 채팅 방 번호
-    private String sender; // 메세지 보낸사람
-    private String message; // 메세지
-    private long userCount;
-    //private LocalDateTime date; // 메세지 전송 시간
 
     public ChatMessageDTO() {
     }
@@ -31,4 +22,16 @@ public class ChatMessageDTO {
         this.message = message;
         this.userCount = userCount;
     }
+
+    // 메시지 타입 : 입장, 퇴장, 채팅
+    public enum MessageType {
+        ENTER, QUIT, TALK
+    }
+
+    private MessageType type; // 메시지 타입
+    private String roomId; // 방번호
+    private String sender; // 메시지 보낸사람
+    @NotNull
+    private String message; // 메시지
+    private long userCount; // 채팅방 인원수, 채팅방 내에서 메시지가 전달될때 인원수 갱신시 사용
 }

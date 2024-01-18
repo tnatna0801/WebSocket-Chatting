@@ -32,7 +32,7 @@ public class ChatService {
     }
 
     // 지정된 Websocket 세션에 메세지 발송
-    public <T> void sendChatMessage(ChatMessageDTO chatMessage) {
+    public void sendChatMessage(ChatMessageDTO chatMessage) {
         chatMessage.setUserCount(chatRoomRepository.getUserCount(chatMessage.getRoomId()));
         if(ChatMessageDTO.MessageType.ENTER.equals(chatMessage.getType())) {
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
@@ -42,7 +42,7 @@ public class ChatService {
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
             chatMessage.setSender("[알림]");
         }
-        log.info(" Service chatMessage 촤핫 메세지 뭐게~~: {}", chatMessage);
-        redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage.getMessage());
+        log.info(" Service chatMessage 촤핫 메세지 뭐게~~: {}", chatMessage.getMessage());
+        redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 }

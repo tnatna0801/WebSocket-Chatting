@@ -21,13 +21,11 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-    //private final ChatService chatService;
     private final ChatRoomRepository chatRoomRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 로그인한 회원의 id 및 jwt 토큰 정보를 조회할 수 있도록 함
-     * @return
      */
     @GetMapping("/user")
     @ResponseBody
